@@ -59,7 +59,7 @@ out_degree(v, g::LabeledGraph) = countnz(g.adjacency[g.dictionary[v],:])
 function out_neighbors(v, g::LabeledGraph)
 
     i = g.dictionary[v]
-    adjacent_vertices = {}
+    adjacent_vertices = []
 
     for w in keys(g.dictionary)
         if g.adjacency[i,g.dictionary[w]]>0
