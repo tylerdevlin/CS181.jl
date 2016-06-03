@@ -49,7 +49,7 @@ out_degree(v, g::MultiGraph) = sum(g.adjacency[g.dictionary[v],:])
 function out_neighbors(v, g::MultiGraph)
 
     i = g.dictionary[v]
-    adjacent_vertices = {}
+    adjacent_vertices = []
 
     for w in keys(g.dictionary)
         if g.adjacency[i,g.dictionary[w]]>0
@@ -65,7 +65,7 @@ in_degree(v, g::MultiGraph) = sum(g.adjacency[:,g.dictionary[v]])
 
 function in_neighbors(v, g::MultiGraph)
     i = g.dictionary[v]
-    adjacent_vertices = {}
+    adjacent_vertices = []
 
     for w in keys(g.dictionary)
         if g.adjacency[g.dictionary[w],i]>0
