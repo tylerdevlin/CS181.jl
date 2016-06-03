@@ -1,11 +1,11 @@
 
 # Write the dot representation of a graph to a stream.
 # Temporary solution for CS181. TODO: clean this up.
-function to_dot(graph::LabeledGraph, stream::IO, with_weight::String="")
+function to_dot(graph::LabeledGraph, stream::IO, with_weight::AbstractString="")
     has_vertex_attrs = method_exists(attributes, (vertex_type(graph), LabeledGraph))
     has_edge_attrs = method_exists(attributes, (edge_type(graph), LabeledGraph))
 
-    write(stream, "$(graph_type_string(graph)) graphname {\n")
+    write(stream, "$(graph_type_Abstractstring(graph)) graphname {\n")
     if implements_edge_list(graph)
         for edge in edges(graph)
             write(stream,"\"$(vertex_index(source(edge), graph))\" $(edge_op(graph)) \"$(vertex_index(target(edge), graph))\"\n")
@@ -35,11 +35,11 @@ end
 
 # Write the dot representation of a graph to a stream.
 # Temporary solution for CS181. TODO: clean this up.
-function to_dot(graph::MultiGraph, stream::IO, with_weight::String="")
+function to_dot(graph::MultiGraph, stream::IO, with_weight::AbstractString="")
     has_vertex_attrs = method_exists(attributes, (vertex_type(graph), MultiGraph))
     has_edge_attrs = method_exists(attributes, (edge_type(graph), MultiGraph))
 
-    write(stream, "$(graph_type_string(graph)) graphname {\n")
+    write(stream, "$(graph_type_Abstractstring(graph)) graphname {\n")
     if implements_edge_list(graph)
         for edge in edges(graph)
             write(stream,"\"$(vertex_index(source(edge), graph))\" $(edge_op(graph)) \"$(vertex_index(target(edge), graph))\"\n")
@@ -69,7 +69,7 @@ function to_dot(graph::MultiGraph, stream::IO, with_weight::String="")
     stream
 end
 
-function graph_type_string(graph::AbstractGraph)
+function graph_type_Abstractstring(graph::AbstractGraph)
     is_directed(graph) ? "digraph" : "graph"
 end
 
@@ -78,8 +78,8 @@ function edge_op(graph::AbstractGraph)
 end
 
 # Parse a LabeledGraph from a DOT stream.
-function from_dot(stream::IO, label_type::DataType=String)
-    graph = LabeledGraph{String}(false);
+function from_dot(stream::IO, label_type::DataType=AbstractString)
+    graph = LabeledGraph{AbstractString}(false);
     add_edge_property!(graph,"WEIGHT",Float64);
 
     in_graph = false;
