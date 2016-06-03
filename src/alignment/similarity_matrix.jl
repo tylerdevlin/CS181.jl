@@ -3,7 +3,7 @@ type CharacterSimilarityMatrix
     m::SparseMatrixCSC{Int,Int}
 end
 
-CharacterSimilarityMatrix(filename::String) = CharacterSimilarityMatrix(load_similarity_matrix(filename)...)
+CharacterSimilarityMatrix(filename::AbstractString) = CharacterSimilarityMatrix(load_similarity_matrix(filename)...)
 
 char_index(simMat::CharacterSimilarityMatrix, c::Char) = simMat.char_index[c]
 lookup(simMat::CharacterSimilarityMatrix, i::Int, j::Int) = (j > i) ? lookup(simMat,j,i) : simMat.m[i,j]
@@ -11,7 +11,7 @@ lookup(simMat::CharacterSimilarityMatrix, i::Int, j::Int) = (j > i) ? lookup(sim
 ################
 # Input parser #
 ################
-function load_similarity_matrix(filename::String)
+function load_similarity_matrix(filename::AbstractString)
     f = open(filename, "r")
     char_index = (Char=>Int)[]
     I = Int[]
