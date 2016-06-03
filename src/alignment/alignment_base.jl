@@ -24,4 +24,4 @@ end
 match_score(s::CharacterMatrixScoring, x::Char, y::Char) = lookup(s.matrix, char_index(s.matrix,x), char_index(s.matrix,y))
 
 # Provide an option to load from file.
-CharacterMatrixScoring(matrixFile::String, gap::Int) = CharacterMatrixScoring(CharacterSimilarityMatrix(matrixFile), gap)
+CharacterMatrixScoring(matrixFile::AbstractString, gap::Int) = CharacterMatrixScoring(CharacterSimilarityMatrix(matrixFile), gap)
