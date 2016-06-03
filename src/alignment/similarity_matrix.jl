@@ -13,7 +13,7 @@ lookup(simMat::CharacterSimilarityMatrix, i::Int, j::Int) = (j > i) ? lookup(sim
 ################
 function load_similarity_matrix(filename::AbstractString)
     f = open(filename, "r")
-    char_index = (Char=>Int)[]
+    char_index = Dict{Char,Int}()
     I = Int[]
     J = Int[]
     V = Int[]
