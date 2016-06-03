@@ -10,11 +10,11 @@ type MultiGraph{V} <: AbstractGraph{V, Vector{V}}
     is_directed :: Bool
     dictionary :: Dict{V,Int}
     adjacency :: Array{Int,2}
-    edge_properties :: Dict{String, Array}
-    edge_property_default :: Dict{String,Any}
+    edge_properties :: Dict{AbstractString, Array}
+    edge_property_default :: Dict{AbstractString,Any}
     
-    MultiGraph(is_directed :: Bool, dictionary :: Dict) = new(is_directed, dictionary, Array(Int, (0,0)), Dict{String,Array}(), Dict{String,Any}())
-    MultiGraph(is_directed :: Bool) = new(is_directed, Dict(), Array(Int, (0,0)), Dict{String,Array}(), Dict{String,Any}())
+    MultiGraph(is_directed :: Bool, dictionary :: Dict) = new(is_directed, dictionary, Array(Int, (0,0)), Dict{AbstractString,Array}(), Dict{AbstractString,Any}())
+    MultiGraph(is_directed :: Bool) = new(is_directed, Dict(), Array(Int, (0,0)), Dict{AbstractString,Array}(), Dict{AbstractString,Any}())
 end
 
 @graph_implements MultiGraph vertex_list vertex_map adjacency_list
@@ -218,21 +218,21 @@ function remove_edge!(g::MultiGraph, u, v)
 end
 
 
-function add_edge_property!{T<:Number}(g::MultiGraph, prop_name::String, value_type::Type{T})
+function add_edge_property!{T<:Number}(g::MultiGraph, prop_name::AbstractString, value_type::Type{T})
     add_edge_property!(g,prop_name,value_type,convert(value_type,0));
 end
 
-function add_edge_property!{T<:String}(g::MultiGraph, prop_name::String, value_type::Type{T})
+function add_edge_property!{T<:AbstractString}(g::MultiGraph, prop_name::AbstractString, value_type::Type{T})
     add_edge_property!(g,prop_name,value_type,convert(value_type,""));
 end
 
-function add_edge_property!{T}(g::MultiGraph, prop_name::String, value_type::Type{T}, default_val = Nothing())
+function add_edge_property!{T}(g::MultiGraph, prop_name::AbstractString, value_type::Type{T}, default_val = Nothing())
     sz = size(g.adjacency);
     g.edge_properties[prop_name] = fill(default_val, sz[1], sz[2]);
     g.edge_property_default[prop_name] = default_val;
 end
 
-function get_edge_property(g::MultiGraph, x, y, key::String)
+function get_edge_property(g::MultiGraph, x, y, key::AbstractString)
     if haskey(g.edge_properties, key)
         g.edge_properties[key][g.dictionary[x], g.dictionary[y]]
     else
@@ -240,7 +240,7 @@ function get_edge_property(g::MultiGraph, x, y, key::String)
     end
 end
 
-function set_edge_property!(g::MultiGraph, u, v, prop_name::String, val)
+function set_edge_property!(g::MultiGraph, u, v, prop_name::AbstractString, val)
 
     p = g.dictionary[u]
     q = g.dictionary[v]
